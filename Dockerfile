@@ -1,5 +1,8 @@
 FROM php:8.4-apache
-
+# Forzar variables de entorno para que Laravel no use sqlite
+ENV DB_CONNECTION=pgsql
+ENV APP_ENV=production
+ENV APP_DEBUG=false
 # Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
     libpng-dev \
