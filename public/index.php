@@ -11,6 +11,7 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 }
 
 // Register the Composer autoloader...
+define('COMPOSER_IGNORE_PLATFORM_CHECK', true);
 require __DIR__.'/../vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
