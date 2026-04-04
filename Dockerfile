@@ -1,8 +1,6 @@
 FROM php:8.4-apache
 # Forzar variables de entorno para que Laravel no use sqlite
-ENV DB_CONNECTION=pgsql
-ENV APP_ENV=production
-ENV APP_DEBUG=false
+
 # Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
     libpng-dev \
@@ -28,8 +26,9 @@ WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
+
 # Permisos para Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Comando de inicio: Migraciones y Servidor
-CMD php artisan migrate --force && apache2-foreground
+# EL TRUCO MAESTRO: Limpiar caché y migrar automáticamente al arrancar
+CMD php artisan config:clear && php artisan cache:clear && php artisan migrate --force && apache2-foreground
