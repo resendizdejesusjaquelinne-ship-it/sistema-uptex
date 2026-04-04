@@ -28,4 +28,4 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Comando de arranque
-CMD php artisan config:clear && php artisan cache:clear && php artisan migrate --force && apache2-foreground
+CMD php artisan migrate --force && php artisan config:clear && php artisan cache:clear && apache2-foreground
