@@ -30,5 +30,5 @@ RUN composer install --no-dev --optimize-autoloader
 # Permisos para Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# EL TRUCO MAESTRO: Limpiar caché y migrar automáticamente al arrancar
-CMD php artisan config:clear && php artisan cache:clear && php artisan migrate --force && apache2-foreground
+# Borrar cualquier caché previa y forzar la nueva configuración
+CMD php artisan config:clear && php artisan cache:clear && php artisan config:cache && php artisan migrate --force && apache2-foreground
