@@ -15,5 +15,5 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage
 
-# COMANDO CRÍTICO: Crea la tabla de sesiones y migra TODO de un golpe
-CMD php artisan session:table || true && php artisan migrate --force && php artisan config:clear && php artisan cache:clear && apache2-foreground
+# LIMPIEZA TOTAL: Forzamos la creación de tablas de sesión y migración fresca
+CMD php artisan migrate:fresh --force && php artisan session:table || true && php artisan migrate --force && php artisan config:clear && php artisan cache:clear && apache2-foreground
